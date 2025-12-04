@@ -29,7 +29,7 @@ export const mockMetrics: Metric[] = [
     {
         id: 'revenue',
         label: 'Omsetning',
-        value: 89400,
+        value: 67400,
         change: 15.7,
         icon: '💰',
         unit: 'currency',

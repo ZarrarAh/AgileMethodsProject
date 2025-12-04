@@ -1,5 +1,6 @@
 import MetricCard from '../components/MetricCard';
-import { mockMetrics } from '../data/mockData';  // ← BRUK relative path
+import MiniBarChart from '../components/MiniBarChart';
+import { mockMetrics, mockTimeSeries } from '../data/mockData';
 
 const LiveMetrics = () => {
     return (
@@ -9,18 +10,19 @@ const LiveMetrics = () => {
                 <p className="text-gray-400">Sanntidsdata fra din butikk</p>
             </div>
 
-            {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {mockMetrics.map((metric) => (
                     <MetricCard key={metric.id} metric={metric} />
                 ))}
             </div>
 
-            {/* Placeholder for charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-dark-card border-2 border-dark-border rounded-lg p-6 h-64 flex items-center justify-center">
-                    <p className="text-gray-400">📈 Mini Bar Chart kommer her (Uke 1)</p>
-                </div>
+                <MiniBarChart
+                    data={mockTimeSeries}
+                    title="Ukentlig salg"
+                    height={70}
+                />
+
                 <div className="bg-dark-card border-2 border-dark-border rounded-lg p-6 h-64 flex items-center justify-center">
                     <p className="text-gray-400">🗓️ Heatmap Calendar kommer her (Uke 1)</p>
                 </div>

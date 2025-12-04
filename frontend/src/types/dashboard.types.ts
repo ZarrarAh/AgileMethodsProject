@@ -15,6 +15,12 @@ export interface TimeSeriesDataPoint {
     label?: string;
 }
 
+export interface DayData {
+    day: string;
+    value: number;
+    label?: string;
+}
+
 export interface Product {
     id: string;
     name: string;

@@ -1,61 +1,79 @@
-import CategoryChart from '../components/CategoryChart';
+import { useState, useEffect } from 'react';
+import { getTopProducts, getCategoryDistribution } from '../api/dashboardApi';
 import ProductList from '../components/ProductList';
+import CategoryChart from '../components/CategoryChart';
 
 const TopPerformers = () => {
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                console.log('Fetching products...');
+
+                const [productsData, categoriesData] = await Promise.all([
+                    getTopProducts(5),
+                    getCategoryDistribution(),
+                ]);
+
+                console.log('Products loaded:', productsData);
+                setProducts(productsData);
+                setCategories(categoriesData);
+                setError(null);
+            } catch (err) {
+                console.error('❌ Error loading data:', err);
+                setError('Failed to load data');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary-cyan"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="bg-danger/10 border-2 border-danger rounded-lg p-8">
+                    <h2 className="text-xl font-bold text-white mb-4">⚠️ Error</h2>
+                    <p className="text-gray-300">{error}</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-8 animate-fade-in">
-            {/* Header */}
             <div>
-                <h2 className="text-3xl font-bold text-white mb-2">Top Performers</h2>
-                <p className="text-gray-400">Dine best-selgende produkter og kategorier</p>
+                <h1 className="text-3xl font-bold text-white mb-2">Top Performers</h1>
+                <p className="text-gray-400">Best-selling products and categories</p>
             </div>
 
-            {/* Main content - Two columns */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Left: Product List */}
-                <div className="bg-dark-card border-2 border-dark-border rounded-lg p-6">
-                    <ProductList />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h2 className="text-xl font-semibold text-white mb-4">
+                        Top 5 Products
+                    </h2>
+                    <ProductList products={products} />
                 </div>
 
-                {/* Right: Category Chart */}
-                <div className="bg-dark-card border-2 border-dark-border rounded-lg p-6">
-                    <CategoryChart />
-                </div>
-            </div>
-
-            {/* Additional insights section (optional) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-dark-card border-2 border-primary-cyan rounded-lg p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                        <span className="text-3xl">🎯</span>
-                        <div>
-                            <p className="text-sm text-gray-400">Høyest konvertering</p>
-                            <p className="text-xl font-bold text-primary-cyan">5.05%</p>
-                        </div>
-                    </div>
-                    <p className="text-sm text-gray-300">Vinterjakke Premium leder an</p>
-                </div>
-
-                <div className="bg-dark-card border-2 border-success rounded-lg p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                        <span className="text-3xl">📈</span>
-                        <div>
-                            <p className="text-sm text-gray-400">Mest visninger</p>
-                            <p className="text-xl font-bold text-success">1.8K</p>
-                        </div>
-                    </div>
-                    <p className="text-sm text-gray-300">Vinterjakke Premium</p>
-                </div>
-
-                <div className="bg-dark-card border-2 border-warning rounded-lg p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                        <span className="text-3xl">🏆</span>
-                        <div>
-                            <p className="text-sm text-gray-400">Total salg (Top 5)</p>
-                            <p className="text-xl font-bold text-warning">278</p>
-                        </div>
-                    </div>
-                    <p className="text-sm text-gray-300">Siste 30 dager</p>
+                <div>
+                    <h2 className="text-xl font-semibold text-white mb-4">
+                        Category Distribution
+                    </h2>
+                    <CategoryChart data={categories} />
                 </div>
             </div>
         </div>

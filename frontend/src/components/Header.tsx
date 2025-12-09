@@ -4,17 +4,17 @@ const Header = () => {
     const { theme } = useTheme();
     
     return (
-        <header className="bg-white dark:bg-dark-card border-b border-gray-200 dark:border-dark-border">
-            <div className="container mx-auto px-6 py-4">
+        <header className="sticky top-0 z-50 bg-white dark:bg-dark-card border-b-2 border-gray-200 dark:border-dark-border shadow-sm">
+            <div className="container mx-auto px-6 py-5">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img  src="/src/assets/logo.png" alt="Kleda Logo" className='h-10 w-auto'/>
+                        <img src="/src/assets/logo.png" alt="Kleda Logo" className='h-10 w-auto'/>
                         <div>
                             <h1 className="text-2xl font-bold text-primary-cyan">
-                                Kleda Dashboard
+                                KLEDA DASHBOARD
                             </h1>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                Datadrevet innsikt for klesbutikkeiere
+                            <p className="text-sm text-gray-600 dark:text-gray-400 opacity-80">
+                                Datadrevet & Kompakt
                             </p>
                         </div>
                     </div>
@@ -37,6 +37,9 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            
+            {/* Gradient border bottom */}
+            <div className="h-0.5 bg-gradient-to-r from-primary-blue via-primary-cyan to-primary-blue dark:from-primary-cyan dark:via-primary-blue dark:to-primary-cyan"></div>
         </header>
     );
 };

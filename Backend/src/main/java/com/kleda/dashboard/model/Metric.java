@@ -26,8 +26,6 @@ public class Metric {
     private Double value;
 
     private Double change;    // Percentage change
-
     private String icon;      // Emoji icon
-
     private String unit;      // 'number', 'currency', 'percentage'
 }

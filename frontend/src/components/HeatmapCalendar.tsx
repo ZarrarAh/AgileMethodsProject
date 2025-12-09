@@ -76,13 +76,17 @@ const HeatmapCalendar = ({ data }: HeatmapCalendarProps) => {
         <div className="flex gap-2 justify-between">
           {days.map((dayData) => {
             const isHovered = hoveredDay?.day === dayData.day;
+            const isDimmed = hoveredDay !== null && !isHovered;
             const isPeak = dayData.activity === maxActivity;
             const activityText = getActivityText(dayData.activity);
 
             return (
                 <div
                     key={dayData.day}
-                    className="relative flex-1"
+                    className={`
+                    relative flex-1 transition-all duration-200
+                    ${isDimmed ? "opacity-50" : ""}
+                    `}
                     onMouseEnter={(e) => handleMouseEnter(dayData, e)}
                     onMouseLeave={() => setHoveredDay(null)}
                 >
@@ -115,39 +119,48 @@ const HeatmapCalendar = ({ data }: HeatmapCalendarProps) => {
         </div>
 
         {/* FIXED TOOLTIP - Går ALDRI utenfor! */}
+        {/* TOOLTIP - MiniBarChart styling med alt original innhold */}
         {hoveredDay && (
             <div
                 className="fixed z-[9999] pointer-events-none"
                 style={{
                   left: `${tooltipX}px`,
                   top: `${tooltipY}px`,
-                  transform: 'translate(-50%, calc(-100% - 10px))',
+                  transform: 'translate(-50%, calc(-100% - 16px))',
                 }}
             >
-              <div className="bg-dark-bg/95 backdrop-blur-sm border-2 border-primary-cyan rounded-lg shadow-xl px-4 py-3 min-w-[200px]">
-                <div className="font-bold text-base mb-2 pb-2 border-b border-gray-700 flex items-center justify-between text-white">
-                  <span>{hoveredDay.day}</span>
-                  {hoveredDay.activity === maxActivity && <span className="text-xl">🏆</span>}
-                </div>
-
-                <div className="space-y-2 mb-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">Aktivitet:</span>
-                    <span className="font-semibold text-primary-cyan">{hoveredDay.activity}%</span>
+              <div className="animate-fade-in">
+                <div className="bg-dark-bg/95 border border-primary-cyan rounded-lg px-4 py-3 shadow-glow-cyan backdrop-blur-sm min-w-[220px]">
+                  {/* Header med dag og trophy */}
+                  <div className="font-bold text-base mb-2 pb-2 border-b border-gray-700 flex items-center justify-between">
+                    <span className="text-white">{hoveredDay.day}</span>
+                    {hoveredDay.activity === maxActivity && <span className="text-xl">🏆</span>}
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">Nivå:</span>
-                    <span className="font-semibold text-white">{getActivityText(hoveredDay.activity)}</span>
-                  </div>
-                </div>
 
-                <div className="space-y-1 text-xs text-gray-300 border-t border-gray-700 pt-2">
-                  {getDetailedInfo(hoveredDay.activity, hoveredDay.activity === maxActivity).map((info, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <span className="text-primary-cyan mt-0.5">•</span>
-                        <span>{info}</span>
-                      </div>
-                  ))}
+                  {/* Activity Stats */}
+                  <div className="space-y-1.5 mb-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-400 text-sm">Aktivitet:</span>
+                      <span className="font-semibold text-primary-cyan text-sm">{hoveredDay.activity}%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-400 text-sm">Nivå:</span>
+                      <span className="font-semibold text-white text-sm">{getActivityText(hoveredDay.activity)}</span>
+                    </div>
+                  </div>
+
+                  {/* Anbefalinger */}
+                  <div className="space-y-1 text-xs text-gray-300 border-t border-gray-700 pt-2">
+                    {getDetailedInfo(hoveredDay.activity, hoveredDay.activity === maxActivity).map((info, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <span className="text-primary-cyan mt-0.5">•</span>
+                          <span>{info}</span>
+                        </div>
+                    ))}
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-dark-bg/95 border-r border-b border-primary-cyan rotate-45" />
                 </div>
               </div>
             </div>

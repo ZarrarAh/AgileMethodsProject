@@ -98,7 +98,7 @@ const HeatmapCalendar = ({ data }: HeatmapCalendarProps) => {
                           ? "bg-primary-cyan shadow-glow-cyan"
                           : "bg-primary-cyan"
                       }
-                  ${isHovered ? "scale-110 shadow-lg ring-2 ring-primary-cyan" : "scale-100"}
+                  ${isHovered ? "scale-110 shadow-lg ring-2 ring-primary-cyan" : "scale-90"}
                   text-dark-bg
                 `}
                       style={{

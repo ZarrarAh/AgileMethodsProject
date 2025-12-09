@@ -8,7 +8,7 @@ const Navigation = () => {
     ];
 
     return (
-        <nav className="bg-dark-card border-b border-dark-border">
+        <nav className="bg-white dark:bg-dark-card border-b border-gray-300 dark:border-dark-border">
             <div className="container mx-auto px-6">
                 <div className="flex gap-1">
                     {navItems.map((item) => (
@@ -18,8 +18,8 @@ const Navigation = () => {
                             className={({ isActive }) =>
                                 `flex items-center gap-2 px-6 py-4 font-medium transition-all ${
                                     isActive
-                                        ? 'text-primary-cyan border-b-2 border-primary-cyan'
-                                        : 'text-gray-400 hover:text-white'
+                                        ? 'text-primary-blue dark:text-primary-cyan border-b-2 border-primary-blue dark:border-primary-cyan'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                                 }`
                             }
                         >

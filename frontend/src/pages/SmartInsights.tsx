@@ -1,5 +1,5 @@
-import InsightList from '../components/InsightList';
 import PredictionsWidget from '../components/PredictionsWidget';
+import InsightList from '../components/InsightList';
 
 const SmartInsights = () => {
     return (

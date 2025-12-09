@@ -1,5 +1,5 @@
-import ProductList from '../components/ProductList';
 import CategoryChart from '../components/CategoryChart';
+import ProductList from '../components/ProductList';
 
 const TopPerformers = () => {
     return (

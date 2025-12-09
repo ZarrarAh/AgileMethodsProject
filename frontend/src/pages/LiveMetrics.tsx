@@ -15,7 +15,7 @@ const LiveMetrics = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                console.log('Fetching metrics...');
+                console.log('🔄 Fetching data...');
 
                 const [metricsData, timeData, heatData] = await Promise.all([
                     getMetrics(),
@@ -23,14 +23,35 @@ const LiveMetrics = () => {
                     getHeatmapData(),
                 ]);
 
-                console.log('Metrics loaded:', metricsData);
+                console.log('📊 Raw time data:', timeData);
+                console.log('📊 Raw heat data:', heatData);
+
+                // Transform time series data for MiniBarChart
+                // MiniBarChart expects: {date, label, value}
+                const transformedTimeData = timeData.map(item => ({
+                    date: item.date || item.day,
+                    label: item.date || item.day,
+                    value: item.views,        // Use views as the main value
+                    views: item.views,
+                    sales: item.sales,
+                }));
+
+                // Transform heatmap data
+                const transformedHeatData = heatData.map(item => ({
+                    day: item.dayName || item.day_name || item.day,
+                    dayShort: item.dayShort || item.day_short,
+                    activity: item.activity,
+                }));
+
+                console.log('✅ Transformed time data:', transformedTimeData);
+                console.log('✅ Transformed heat data:', transformedHeatData);
+
                 setMetrics(metricsData);
-                setTimeSeriesData(timeData);
-                setHeatmapData(heatData);
+                setTimeSeriesData(transformedTimeData);
+                setHeatmapData(transformedHeatData);
                 setError(null);
             } catch (err) {
-                console.error('Error loading data:', err);
-                setError('Failed to load data');
+                console.error('❌ Error loading data:', err);
             } finally {
                 setLoading(false);
             }
@@ -50,9 +71,15 @@ const LiveMetrics = () => {
     if (error) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="bg-danger/10 border-2 border-danger rounded-lg p-8">
+                <div className="bg-danger/10 border-2 border-danger rounded-lg p-8 max-w-md">
                     <h2 className="text-xl font-bold text-white mb-4">⚠️ Error</h2>
-                    <p className="text-gray-300">{error}</p>
+                    <p className="text-gray-300 mb-4">{error}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="bg-primary-cyan text-dark-bg font-semibold px-6 py-3 rounded-lg hover:bg-primary-cyan/80 transition-colors"
+                    >
+                        Prøv igjen
+                    </button>
                 </div>
             </div>
         );
@@ -74,18 +101,29 @@ const LiveMetrics = () => {
 
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="glass-card p-6">
-                    <h2 className="text-xl font-semibold text-white mb-4">
-                        7-Day Trend
-                    </h2>
-                    <MiniBarChart data={timeSeriesData} />
+                <div>
+                    {timeSeriesData.length > 0 ? (
+                        <MiniBarChart
+                            data={timeSeriesData}
+                            title="7-dagers trend"
+                            height={80}
+                        />
+                    ) : (
+                        <div className="glass-card p-6">
+                            <p className="text-gray-400">No time series data available</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className="glass-card p-6">
                     <h2 className="text-xl font-semibold text-white mb-4">
                         Weekly Activity
                     </h2>
-                    <HeatmapCalendar data={heatmapData} />
+                    {heatmapData.length > 0 ? (
+                        <HeatmapCalendar data={heatmapData} />
+                    ) : (
+                        <p className="text-gray-400">No heatmap data available</p>
+                    )}
                 </div>
             </div>
         </div>

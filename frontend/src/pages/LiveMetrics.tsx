@@ -105,7 +105,7 @@ const LiveMetrics = () => {
                     {timeSeriesData.length > 0 ? (
                         <MiniBarChart
                             data={timeSeriesData}
-                            title="7-dagers trend"
+                            title="Visninger siste 7 dager"
                             height={80}
                         />
                     ) : (
@@ -115,14 +115,14 @@ const LiveMetrics = () => {
                     )}
                 </div>
 
-                <div className="glass-card p-6">
+                <div className="bg-dark-card border-2 border-dark-border rounded-lg p-4">
                     <h2 className="text-xl font-semibold text-white mb-4">
-                        Weekly Activity
+                        Ukentlig aktivitet
                     </h2>
                     {heatmapData.length > 0 ? (
-                        <HeatmapCalendar data={heatmapData} />
+                        <HeatmapCalendar data={heatmapData}/>
                     ) : (
-                        <p className="text-gray-400">No heatmap data available</p>
+                        <p className="text-gray-400">Laster data...</p>
                     )}
                 </div>
             </div>

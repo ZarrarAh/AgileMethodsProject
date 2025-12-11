@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTopProducts, getCategoryDistribution } from '../api/dashboardApi';
 import ProductList from '../components/ProductList';
 import CategoryChart from '../components/CategoryChart';
+import AnimatedPage from '@/components/AnimatedPage';
 
 const TopPerformers = () => {
     const [products, setProducts] = useState([]);
@@ -55,7 +56,8 @@ const TopPerformers = () => {
     }
 
     return (
-        <div className="space-y-8 animate-fade-in">
+        <AnimatedPage>
+        <div className="space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-white mb-2">Top Performers</h1>
                 <p className="text-gray-400">Best-selling products and categories</p>
@@ -77,6 +79,7 @@ const TopPerformers = () => {
                 </div>
             </div>
         </div>
+    </AnimatedPage>
     );
 };
 

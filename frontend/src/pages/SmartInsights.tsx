@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getInsights, getPredictions } from '../api/dashboardApi';
 import InsightList from '../components/InsightList';
 import PredictionsWidget from '../components/PredictionsWidget';
+import AnimatedPage from '@/components/AnimatedPage';
 
 const SmartInsights = () => {
     const [insights, setInsights] = useState([]);
@@ -55,7 +56,8 @@ const SmartInsights = () => {
     }
 
     return (
-        <div className="space-y-8 animate-fade-in">
+        <AnimatedPage>
+        <div className="space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-white mb-2">Smart Insights</h1>
                 <p className="text-gray-400">AI-powered recommendations</p>
@@ -77,6 +79,7 @@ const SmartInsights = () => {
                 </div>
             </div>
         </div>
+    </AnimatedPage>
     );
 };
 

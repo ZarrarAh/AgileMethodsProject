@@ -40,7 +40,7 @@ const InsightCard = ({ insight }: InsightCardProps) => {
 
     return (
         <div
-            className={`${style.bgColor} border-2 ${style.borderColor} rounded-lg p-5 hover:scale-105 transition-all duration-300 animate-fade-in`}
+            className={`${style.bgColor} border-2 ${style.borderColor} rounded-lg p-5 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,245,255,0.35)] transition-all duration-300 animate-fade-in`}
         >
             {/* Header */}
             <div className="flex items-start justify-between mb-4">

@@ -3,6 +3,7 @@ import { getMetrics, getTimeSeries, getHeatmapData } from '../api/dashboardApi';
 import MetricCard from '../components/MetricCard';
 import MiniBarChart from '../components/MiniBarChart';
 import HeatmapCalendar from '../components/HeatmapCalendar';
+import AnimatedPage from '@/components/AnimatedPage';
 
 const LiveMetrics = () => {
     const [metrics, setMetrics] = useState([]);
@@ -86,7 +87,8 @@ const LiveMetrics = () => {
     }
 
     return (
-        <div className="space-y-8 animate-fade-in">
+        <AnimatedPage>
+        <div className="space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-white mb-2">Live Metrics</h1>
                 <p className="text-gray-400">Real-time dashboard metrics</p>
@@ -127,6 +129,7 @@ const LiveMetrics = () => {
                 </div>
             </div>
         </div>
+    </AnimatedPage>
     );
 };
 

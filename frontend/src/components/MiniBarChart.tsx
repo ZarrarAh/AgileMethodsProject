@@ -52,7 +52,7 @@ const MiniBarChart = ({
 
     return (
         <div className="bg-dark-card border-2 border-dark-border rounded-lg p-4">
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex justify-between items-center mb-8">
                 <h4 className="text-white text-sm font-semibold tracking-wide">
                     {title}
                 </h4>
@@ -69,7 +69,7 @@ const MiniBarChart = ({
             </div>
 
             <div
-                className="relative flex gap-1 justify-center items-end"
+                className="relative flex gap-4 justify-center items-end px-6"
                 style={{ height: `${height + (showDayLabels ? 24 : 0)}px` }}
             >
                 {normalizedData.map((item, index) => {
@@ -79,7 +79,7 @@ const MiniBarChart = ({
                     return (
                         <div
                             key={index}
-                            className={`flex-1 flex flex-col items-center gap-1.5 cursor-pointer transition-all duration-200 ${
+                            className={`flex-1 max-w-10 flex flex-col items-center gap-2 cursor-pointer transition-all duration-200 ${
                                 isHovered ? 'scale-105' : ''
                             } ${isDimmed ? 'opacity-50' : ''}`}
                             onMouseEnter={() => setHoveredIndex(index)}
@@ -105,7 +105,7 @@ const MiniBarChart = ({
                                 style={{ height: `${height}px` }}
                             >
                                 <div
-                                    className={`w-full max-w-6 min-w-2 rounded-t transition-all duration-400 ease-out ${
+                                    className={`w-full rounded-t transition-all duration-400 ease-out ${
                                         isHovered ? 'shadow-glow-cyan' : ''
                                     }`}
                                     style={{

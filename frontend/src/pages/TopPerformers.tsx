@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getTopProducts, getCategoryDistribution } from '../api/dashboardApi';
 import ProductList from '../components/ProductList';
 import CategoryChart from '../components/CategoryChart';
-import AnimatedPage from '@/components/AnimatedPage';
+import AnimatedPage from '../components/AnimatedPage';
 
 const TopPerformers = () => {
     const [products, setProducts] = useState([]);
@@ -26,7 +26,7 @@ const TopPerformers = () => {
                 setCategories(categoriesData);
                 setError(null);
             } catch (err) {
-                console.error('❌ Error loading data:', err);
+                console.error('Error loading data:', err);
                 setError('Failed to load data');
             } finally {
                 setLoading(false);
@@ -48,7 +48,10 @@ const TopPerformers = () => {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="bg-danger/10 border-2 border-danger rounded-lg p-8">
-                    <h2 className="text-xl font-bold text-white mb-4">⚠️ Error</h2>
+                    <h2 className="text-xl font-bold text-white mb-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                    </svg>
+                        Error</h2>
                     <p className="text-gray-300">{error}</p>
                 </div>
             </div>
@@ -65,16 +68,10 @@ const TopPerformers = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h2 className="text-xl font-semibold text-white mb-4">
-                        Top 5 Products
-                    </h2>
                     <ProductList products={products} />
                 </div>
 
                 <div>
-                    <h2 className="text-xl font-semibold text-white mb-4">
-                        Category Distribution
-                    </h2>
                     <CategoryChart data={categories} />
                 </div>
             </div>

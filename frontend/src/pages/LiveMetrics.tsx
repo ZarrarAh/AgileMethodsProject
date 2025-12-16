@@ -3,7 +3,7 @@ import { getMetrics, getTimeSeries, getHeatmapData } from '../api/dashboardApi';
 import MetricCard from '../components/MetricCard';
 import MiniBarChart from '../components/MiniBarChart';
 import HeatmapCalendar from '../components/HeatmapCalendar';
-import AnimatedPage from '@/components/AnimatedPage';
+import AnimatedPage from '../components/AnimatedPage';
 
 const LiveMetrics = () => {
     const [metrics, setMetrics] = useState([]);
@@ -16,7 +16,7 @@ const LiveMetrics = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                console.log('🔄 Fetching data...');
+                console.log('Fetching data...');
 
                 const [metricsData, timeData, heatData] = await Promise.all([
                     getMetrics(),
@@ -24,8 +24,8 @@ const LiveMetrics = () => {
                     getHeatmapData(),
                 ]);
 
-                console.log('📊 Raw time data:', timeData);
-                console.log('📊 Raw heat data:', heatData);
+                console.log('Raw time data:', timeData);
+                console.log('Raw heat data:', heatData);
 
                 // Transform time series data for MiniBarChart
                 // MiniBarChart expects: {date, label, value}
@@ -44,15 +44,15 @@ const LiveMetrics = () => {
                     activity: item.activity,
                 }));
 
-                console.log('✅ Transformed time data:', transformedTimeData);
-                console.log('✅ Transformed heat data:', transformedHeatData);
+                console.log('Transformed time data:', transformedTimeData);
+                console.log('Transformed heat data:', transformedHeatData);
 
                 setMetrics(metricsData);
                 setTimeSeriesData(transformedTimeData);
                 setHeatmapData(transformedHeatData);
                 setError(null);
             } catch (err) {
-                console.error('❌ Error loading data:', err);
+                console.error('Error loading data:', err);
             } finally {
                 setLoading(false);
             }
@@ -73,7 +73,11 @@ const LiveMetrics = () => {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="bg-danger/10 border-2 border-danger rounded-lg p-8 max-w-md">
-                    <h2 className="text-xl font-bold text-white mb-4">⚠️ Error</h2>
+                    <h2 className="text-xl font-bold text-white mb-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                    </svg>
+                        Error
+                    </h2>
                     <p className="text-gray-300 mb-4">{error}</p>
                     <button
                         onClick={() => window.location.reload()}

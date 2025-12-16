@@ -13,13 +13,45 @@ const InsightCard = ({ insight }: InsightCardProps) => {
     const getPriorityBadge = (priority: string) => {
         switch (priority) {
             case 'high':
-                return { label: 'Høy', color: 'bg-danger text-white', icon: '🔴' };
+                return {
+                    label: 'Høy',
+                    color: 'bg-danger text-white',
+                    icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                               stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+                    </svg>
+                };
             case 'medium':
-                return { label: 'Middels', color: 'bg-warning text-dark-bg', icon: '🟡' };
+                return {
+                    label: 'Middels',
+                    color: 'bg-warning text-dark-bg',
+                    icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                               stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+                    </svg>
+                };
             case 'low':
-                return { label: 'Lav', color: 'bg-gray-500 text-white', icon: '⚪' };
+                return {
+                    label: 'Lav',
+                    color: 'bg-gray-500 text-white',
+                    icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                               stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+                    </svg>
+                };
             default:
-                return { label: 'Normal', color: 'bg-gray-600 text-white', icon: '⚪' };
+                return {
+                    label: 'Normal',
+                    color: 'bg-gray-600 text-white',
+                    icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                               stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+                    </svg>
+                };
         }
     };
 

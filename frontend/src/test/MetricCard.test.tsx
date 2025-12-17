@@ -77,7 +77,7 @@ describe('MetricCard', () => {
         const percentMetric: Metric = {
             id: 'conversion',
             label: 'Konvertering',
-            value: 2.74,
+            value: 2.77,
             change: -0.3,
             icon: '📊',
             unit: 'percentage',

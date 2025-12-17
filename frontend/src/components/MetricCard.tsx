@@ -1,5 +1,6 @@
 import type { Metric } from '../types/dashboard.types';
 import { formatCurrency, formatNumber, formatPercentage, getTrendInfo } from '../utils/formatters';
+import IconMapper from './IconMapper';
 
 interface MetricCardProps {
     metric: Metric;
@@ -23,7 +24,11 @@ const MetricCard = ({ metric }: MetricCardProps) => {
     return (
         <div className="bg-white dark:bg-dark-card border-2 border-gray-200 dark:border-dark-border rounded-lg p-6 hover:border-primary-blue dark:hover:border-primary-cyan hover:scale-105 transition-all duration-300 animate-fade-in shadow-sm hover:shadow-md">
             <div className="flex items-start justify-between mb-4">
-                <span className="text-3xl">{icon}</span>
+                <IconMapper
+                    iconName={icon}
+                    size={32}
+                    className="text-primary-cyan"
+                />
                 <span className={`text-sm font-semibold ${color}`}>
                     {arrow} {formatPercentage(change)}
                 </span>

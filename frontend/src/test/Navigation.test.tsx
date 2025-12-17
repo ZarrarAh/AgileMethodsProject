@@ -19,11 +19,10 @@ describe('Navigation', () => {
         expect(screen.getByText('Smart Insights')).toBeInTheDocument()
     })
 
-    it('rendrer navigasjonsikoner', () => {
+    it('rendrer navigasjonsikoner som SVG', () => {
         renderWithRouter(<Navigation />)
-        expect(screen.getByText('📊')).toBeInTheDocument()
-        expect(screen.getByText('🏆')).toBeInTheDocument()
-        expect(screen.getByText('💡')).toBeInTheDocument()
+        const svgIcons = document.querySelectorAll('svg')
+        expect(svgIcons.length).toBe(3)
     })
 
     it('har riktige lenker', () => {

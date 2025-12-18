@@ -8,7 +8,7 @@ const mockMetric: Metric = {
     label: 'Visninger',
     value: 12400,
     change: 18.5,
-    icon: '👁️',
+    icon: 'eye',
     unit: 'number',
 }
 
@@ -18,9 +18,10 @@ describe('MetricCard', () => {
         expect(screen.getByText('Visninger')).toBeInTheDocument()
     })
 
-    it('viser ikon', () => {
+    it('viser ikon som SVG', () => {
         render(<MetricCard metric={mockMetric} />)
-        expect(screen.getByText('👁️')).toBeInTheDocument()
+        const svg = document.querySelector('svg')
+        expect(svg).toBeInTheDocument()
     })
 
     it('formaterer tall med K for tusen', () => {
@@ -28,25 +29,25 @@ describe('MetricCard', () => {
         expect(screen.getByText('12.4K')).toBeInTheDocument()
     })
 
-    it('viser positiv endring', () => {
+    it('viser positiv endring med pil og prosent', () => {
         render(<MetricCard metric={mockMetric} />)
-        expect(screen.getByText(/↑/)).toBeInTheDocument()
-        expect(screen.getByText(/18\.5%/)).toBeInTheDocument()
+        const changeElement = screen.getByText(/↑.*\+18\.5%/)
+        expect(changeElement).toBeInTheDocument()
     })
 
-    it('viser negativ endring', () => {
+    it('viser negativ endring med pil og prosent', () => {
         const negativMetric: Metric = {
             ...mockMetric,
             change: -5.2,
         }
         render(<MetricCard metric={negativMetric} />)
-        expect(screen.getByText(/↓/)).toBeInTheDocument()
-        expect(screen.getByText(/5\.2%/)).toBeInTheDocument()
+        const changeElement = screen.getByText(/↓.*-5\.2%/)
+        expect(changeElement).toBeInTheDocument()
     })
 
     it('har grønn farge for positiv endring', () => {
         render(<MetricCard metric={mockMetric} />)
-        const changeElement = screen.getByText(/↑.*18\.5%/)
+        const changeElement = screen.getByText(/↑.*\+18\.5%/)
         expect(changeElement).toHaveClass('text-success')
     })
 
@@ -56,7 +57,7 @@ describe('MetricCard', () => {
             change: -5.2,
         }
         render(<MetricCard metric={negativMetric} />)
-        const changeElement = screen.getByText(/↓.*5\.2%/)
+        const changeElement = screen.getByText(/↓.*-5\.2%/)
         expect(changeElement).toHaveClass('text-danger')
     })
 
@@ -66,7 +67,7 @@ describe('MetricCard', () => {
             label: 'Omsetning',
             value: 67400,
             change: 15.7,
-            icon: '💰',
+            icon: 'dollar-sign',
             unit: 'currency',
         }
         render(<MetricCard metric={currencyMetric} />)
@@ -79,10 +80,10 @@ describe('MetricCard', () => {
             label: 'Konvertering',
             value: 2.77,
             change: -0.3,
-            icon: '📊',
+            icon: 'percent',
             unit: 'percentage',
         }
         render(<MetricCard metric={percentMetric} />)
-        expect(screen.getByText('2.74%')).toBeInTheDocument()
+        expect(screen.getByText('2.77%')).toBeInTheDocument()
     })
 })

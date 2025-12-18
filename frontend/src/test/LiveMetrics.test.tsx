@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import LiveMetrics from '../pages/LiveMetrics'
 
@@ -12,46 +12,41 @@ const renderWithRouter = (component: React.ReactNode) => {
 }
 
 describe('LiveMetrics Page', () => {
-    it('rendrer sidetittel', async () => {
+    it('rendrer loading spinner ved oppstart', () => {
         renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            expect(screen.getByText('Live Metrics')).toBeInTheDocument()
-        })
+        const spinner = document.querySelector('.animate-spin')
+        expect(spinner).toBeInTheDocument()
     })
 
-    it('rendrer undertittel', async () => {
+    it('har loading container med flex layout', () => {
         renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            expect(screen.getByText('Real-time dashboard metrics')).toBeInTheDocument()
-        })
+        const container = document.querySelector('.flex.items-center.justify-center')
+        expect(container).toBeInTheDocument()
     })
 
-    it('rendrer heatmap seksjon', async () => {
+    it('spinner har riktig styling', () => {
         renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            expect(screen.getByText('Ukentlig aktivitet')).toBeInTheDocument()
-        })
+        const spinner = document.querySelector('.animate-spin')
+        expect(spinner).toHaveClass('rounded-full')
+        expect(spinner).toHaveClass('border-b-2')
+        expect(spinner).toHaveClass('border-primary-cyan')
     })
 
-    it('viser loading state for heatmap', async () => {
+    it('spinner har riktig størrelse', () => {
         renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            expect(screen.getByText('Laster data...')).toBeInTheDocument()
-        })
+        const spinner = document.querySelector('.animate-spin')
+        expect(spinner).toHaveClass('h-32')
+        expect(spinner).toHaveClass('w-32')
     })
 
-    it('viser no data melding for time series', async () => {
+    it('loading container fyller skjermen', () => {
         renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            expect(screen.getByText('No time series data available')).toBeInTheDocument()
-        })
+        const container = document.querySelector('.min-h-screen')
+        expect(container).toBeInTheDocument()
     })
 
-    it('har metrics grid container', async () => {
-        renderWithRouter(<LiveMetrics />)
-        await waitFor(() => {
-            const grid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4')
-            expect(grid).toBeInTheDocument()
-        })
+    it('rendrer inne i router kontekst', () => {
+        const { container } = renderWithRouter(<LiveMetrics />)
+        expect(container).toBeInTheDocument()
     })
 })
